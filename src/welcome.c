@@ -1,0 +1,22 @@
+#include "text_helper.h"
+
+void welcome_draw() {
+  TEXT_HELPER_INIT();
+  
+  TEXT_HELPER_MOVE(32, 13);
+  
+  TEXT_HELPER_DRAW("Welcome to ", 255, 255, 255);
+  TEXT_HELPER_DRAW("MSED", 255, 255, 0);
+  TEXT_HELPER_DRAW("!", 255, 255, 255);
+  
+  TEXT_HELPER_SET_BASE(27);
+  
+  TEXT_HELPER_RETURN();
+  TEXT_HELPER_RETURN();
+  
+  TEXT_HELPER_DRAW("Press ", 255, 255, 255);
+  TEXT_HELPER_DRAW("ESC", 255, 255, 0);
+  TEXT_HELPER_DRAW(" then ", 255, 255, 255);
+  TEXT_HELPER_DRAW("H", 255, 255, 0);
+  TEXT_HELPER_DRAW(" for help.", 255, 255, 255);
+}

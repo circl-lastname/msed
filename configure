@@ -1,0 +1,56 @@
+#!/bin/sh
+set -e
+
+generate_ninja () {
+  echo -n > build.ninja
+  
+cat << EOF >> build.ninja
+rule cc
+  command = $CC -c \$in -O2 -Wall -Werror -Wno-main -Wno-pointer-sign -Wno-stringop-truncation -Wno-switch $(sdl2-config --cflags) -MD -MF \$out.d -o \$out
+  depfile = \$out.d
+  description = Compiling C object \$out
+
+rule ld
+  command = $CC \$in -s $(sdl2-config --libs) -o \$out
+  description = Linking executable \$out
+
+rule convert
+  command = convert \$in -depth 1 -negate gray:\$out
+  description = Converting to raw binary \$out
+
+rule cc_bin2h
+  command = $CC \$in -s -O2 -Wall -Werror -Wno-main -MD -MF \$out.d -o \$out
+  depfile = \$out.d
+  description = Compiling executable \$out
+
+rule bin2h
+  command = build/bin2h < \$in > \$out
+  description = Converting to C file \$out
+
+EOF
+  
+  echo "build build/bin2h: cc_bin2h src/bin2h/bin2h.c" >> build.ninja
+  echo "build build/font.bin: convert src/font.png" >> build.ninja
+  echo "build build/font.c: bin2h build/font.bin | build/bin2h" >> build.ninja
+  echo "build build/font.o: cc build/font.c" >> build.ninja
+  
+  cd src
+  files=$(echo *.c)
+  cd ..
+  
+  objects=
+  
+  for file in $files; do
+    object="build/$(echo $file | sed "s/\\.c$/.o/")"
+    objects="$objects$object "
+    
+    echo "build $object: cc src/$file" >> build.ninja
+  done
+  
+  echo "build bin/msed: ld ${objects}build/font.o" >> build.ninja
+  
+  echo "default bin/msed" >> build.ninja
+}
+
+CC=${CC:-gcc}
+generate_ninja
