@@ -60,4 +60,13 @@ void help_draw() {
   TEXT_HELPER_DRAW("Q", 255, 255, 0);
   TEXT_HELPER_DRAW(" to quit.", 255, 255, 255);
   TEXT_HELPER_RETURN();
+  
+  TEXT_HELPER_RETURN();
+  
+  TEXT_HELPER_DRAW("For more information regarding each mode, view the ", 255, 255, 255);
+  TEXT_HELPER_DRAW("USAGE.md", 255, 255, 0);
+  TEXT_HELPER_DRAW(" file in the ", 255, 255, 255);
+  TEXT_HELPER_DRAW("GitHub", 255, 255, 0);
+  TEXT_HELPER_RETURN();
+  TEXT_HELPER_DRAW("repository.", 255, 255, 255);
 }

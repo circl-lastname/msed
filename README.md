@@ -10,3 +10,6 @@ With ImageMagick, SDL2, `ninja`, and `gcc` installed:
 * `ninja`
 
 The executable will be present in the newly created `bin` directory.
+
+## Usage
+See [USAGE.md](USAGE.md).
