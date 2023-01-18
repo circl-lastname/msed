@@ -27,12 +27,11 @@ rule bin2h
   command = build/bin2h < \$in > \$out
   description = Converting to C file \$out
 
+build build/bin2h: cc_bin2h src/bin2h/bin2h.c
+build build/font.bin: convert 3rdparty/font.png
+build build/font.c: bin2h build/font.bin | build/bin2h
+build build/font.o: cc build/font.c
 EOF
-  
-  echo "build build/bin2h: cc_bin2h src/bin2h/bin2h.c" >> build.ninja
-  echo "build build/font.bin: convert 3rdparty/font.png" >> build.ninja
-  echo "build build/font.c: bin2h build/font.bin | build/bin2h" >> build.ninja
-  echo "build build/font.o: cc build/font.c" >> build.ninja
   
   cd src
   files=$(echo *.c)
