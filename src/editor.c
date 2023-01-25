@@ -96,7 +96,8 @@ static unsigned char current_char;
 static unsigned char copy_buffer[80][24] = { { ' ' } };
 static ansi_color_t copy_bg_color[80][24] = { { ANSI_BLACK } };
 static ansi_color_t copy_fg_color[80][24] = { { ANSI_B_WHITE } };
-static SDL_Rect copy_cursor = { 0, 0, 1, 1 };
+static unsigned copy_width = 1;
+static unsigned copy_height = 1;
 static bool copy_show_copied = false;
 
 static unsigned text_base;
@@ -383,7 +384,8 @@ void editor_copy_handle_key(SDL_Event* event) {
       }
     }
     
-    copy_cursor = cursor;
+    copy_width = cursor.w;
+    copy_height = cursor.h;
     
     copy_show_copied = true;
   } else if (cursor_handle_key(event)) {
@@ -392,7 +394,16 @@ void editor_copy_handle_key(SDL_Event* event) {
 }
 
 void editor_paste_enter() {
-  cursor = copy_cursor;
+  cursor.w = copy_width;
+  cursor.h = copy_height;
+  
+  if (cursor.x + cursor.w - 1 > 79) {
+    cursor.x -= cursor.w - 1;
+  }
+  
+  if (cursor.y + cursor.h - 1 > 23) {
+    cursor.y -= cursor.h - 1;
+  }
 }
 
 void editor_paste_handle_key(SDL_Event* event) {
