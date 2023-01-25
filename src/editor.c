@@ -1,12 +1,15 @@
 #include <SDL.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 
 #include "main.h"
 #include "text.h"
 #include "mode.h"
 
-typedef enum {
+typedef uint8_t ansi_color_t;
+
+enum {
   ANSI_BLACK,
   ANSI_RED,
   ANSI_GREEN,
@@ -23,7 +26,7 @@ typedef enum {
   ANSI_B_MAGENTA,
   ANSI_B_CYAN,
   ANSI_B_WHITE,
-} ansi_color_t;
+};
 
 static SDL_Color ansi_color[] = {
   { 0, 0, 0 },
