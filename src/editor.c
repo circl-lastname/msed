@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "main.h"
 #include "text.h"
@@ -106,13 +107,8 @@ static bool copy_show_copied = false;
 static unsigned text_base;
 
 void editor_init() {
-  // There's no standard way to fill an array with a certain value in C
-  for (unsigned x = 0; x < 80; x++) {
-    for (unsigned y = 0; y < 24; y++) {
-      buffer[x][y] = ' ';
-      fg_color[x][y] = ANSI_B_WHITE;
-    }
-  }
+  memset(buffer, ' ', 80*24);
+  memset(fg_color, ANSI_B_WHITE, 80*24);
 }
 
 void editor_save(FILE* file) {
