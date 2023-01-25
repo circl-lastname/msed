@@ -301,7 +301,9 @@ void editor_bg_enter() {
 void editor_bg_handle_key(SDL_Event* event) {
   switch (event->key.keysym.sym) {
     case SDLK_MINUS:
-      current_color = (current_color - 1) % 16;
+      // This does not work when done the same way as the equals case
+      current_color--;
+      current_color %= 16;
       bg_fill();
     break;
     case SDLK_EQUALS:
@@ -330,7 +332,9 @@ void editor_fg_enter() {
 void editor_fg_handle_key(SDL_Event* event) {
   switch (event->key.keysym.sym) {
     case SDLK_MINUS:
-      current_color = (current_color - 1) % 16;
+      // This does not work when done the same way as the equals case
+      current_color--;
+      current_color %= 16;
       fg_fill();
     break;
     case SDLK_EQUALS:
