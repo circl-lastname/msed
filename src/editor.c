@@ -183,7 +183,7 @@ void editor_load(FILE* file) {
           
           ch = fgetc(file);
           
-          *current = offset + ch - 0x30;
+          *current = (offset + ch - 0x30) % 16;
           
           ch = fgetc(file);
           
