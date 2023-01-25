@@ -102,6 +102,16 @@ static bool copy_show_copied = false;
 
 static unsigned text_base;
 
+void editor_init() {
+  // There's no standard way to fill an array with a certain value in C
+  for (unsigned x = 0; x < 80; x++) {
+    for (unsigned y = 0; y < 24; y++) {
+      buffer[x][y] = ' ';
+      fg_color[x][y] = ANSI_B_WHITE;
+    }
+  }
+}
+
 void editor_save(FILE* file) {
   fputs("\x1b[", file);
   fputs(ansi_bg_code[bg_color[0][0]], file);
@@ -202,16 +212,6 @@ void editor_load(FILE* file) {
     }
     
     fseek(file, 2, SEEK_CUR);
-  }
-}
-
-void editor_init() {
-  // There's no standard way to fill an array with a certain value in C
-  for (unsigned x = 0; x < 80; x++) {
-    for (unsigned y = 0; y < 24; y++) {
-      buffer[x][y] = ' ';
-      fg_color[x][y] = ANSI_B_WHITE;
-    }
   }
 }
 
