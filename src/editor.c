@@ -397,11 +397,11 @@ void editor_paste_enter() {
   cursor.h = copy_height;
   
   if (cursor.x + cursor.w - 1 > 79) {
-    cursor.x -= cursor.w - 1;
+    cursor.x = 80 - cursor.w;
   }
   
   if (cursor.y + cursor.h - 1 > 23) {
-    cursor.y -= cursor.h - 1;
+    cursor.y = 24 - cursor.h;
   }
 }
 
