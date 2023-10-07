@@ -6,7 +6,7 @@
 
 static char* current_title;
 
-SDL_HitTestResult hit_test(SDL_Window* unused_window, const SDL_Point* point, void* unused_data) {
+static SDL_HitTestResult hit_test(SDL_Window* unused_window, const SDL_Point* point, void* unused_data) {
   if (point->x < 656 - 8*7 && point->y < 14) {
     return SDL_HITTEST_DRAGGABLE;
   } else {
