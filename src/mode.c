@@ -100,14 +100,14 @@ void mode_handle_key(SDL_Event* event) {
     mode_selection = false;
   }
   
-  main_draw();
+  main_will_draw();
 }
 
 void mode_handle_input(SDL_Event* event) {
   // A mode which does not support it should never receive it
   mode_properties[current_mode].handle_input(event);
   
-  main_draw();
+  main_will_draw();
 }
 
 void mode_draw() {

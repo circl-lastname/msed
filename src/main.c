@@ -13,6 +13,8 @@
 SDL_Window* window;
 SDL_Renderer* renderer;
 
+static bool will_draw = false;
+
 void main_quit() {
   text_destroy();
   file_destroy();
@@ -31,6 +33,10 @@ void main_draw() {
   mode_draw();
   
   SDL_RenderPresent(renderer);
+}
+
+void main_will_draw() {
+  will_draw = true;
 }
 
 void main() {
@@ -52,26 +58,37 @@ void main() {
     SDL_Event event;
     SDL_WaitEvent(&event);
     
-    switch (event.type) {
-      case SDL_QUIT:
-        main_quit();
-      break;
-      case SDL_KEYDOWN:
-        mode_handle_key(&event);
-      break;
-      case SDL_TEXTINPUT:
-        mode_handle_input(&event);
-      break;
-      case SDL_MOUSEBUTTONUP:
-        if (event.button.button == SDL_BUTTON_LEFT) {
-          titlebar_handle_click(&event);
-        }
-      break;
-      case SDL_WINDOWEVENT:
-        if (event.window.event == SDL_WINDOWEVENT_EXPOSED) {
-          main_draw();
-        }
-      break;
+    while (true) {
+      switch (event.type) {
+        case SDL_QUIT:
+          main_quit();
+        break;
+        case SDL_KEYDOWN:
+          mode_handle_key(&event);
+        break;
+        case SDL_TEXTINPUT:
+          mode_handle_input(&event);
+        break;
+        case SDL_MOUSEBUTTONUP:
+          if (event.button.button == SDL_BUTTON_LEFT) {
+            titlebar_handle_click(&event);
+          }
+        break;
+        case SDL_WINDOWEVENT:
+          if (event.window.event == SDL_WINDOWEVENT_EXPOSED) {
+            main_will_draw();
+          }
+        break;
+      }
+      
+      if (!SDL_PollEvent(&event)) {
+        break;
+      }
+    }
+    
+    if (will_draw) {
+      main_draw();
+      will_draw = false;
     }
   }
 }
