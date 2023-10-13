@@ -47,16 +47,13 @@ void file_init() {
   HE((textbox = malloc(sizeof(textbox_t) + 81)) == NULL);
   
   *textbox = (textbox_t){
-    8,
-    14*3,
-    
-    0,
-    true,
-    
-    handle_change,
-    
-    81,
-    0
+    .x = 8,
+    .y = 14*3,
+    .cursor = 0,
+    .cursor_show = true,
+    .handle_change = handle_change,
+    .capacity = 81,
+    .length = 0,
   };
   
   if (getcwd(textbox->text, 81)) {
