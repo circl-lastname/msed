@@ -199,7 +199,7 @@ void file_handle_key(SDL_Event* event) {
         case SDLK_RIGHT:
           button = (button + 1) % 2;
         break;
-        case SDLK_RETURN:
+        case SDLK_RETURN:;
           FILE* file = NULL;
           
           switch (button) {

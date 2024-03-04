@@ -39,7 +39,7 @@ void main_will_draw() {
   will_draw = true;
 }
 
-void main() {
+int main() {
   HE(SDL_Init(SDL_INIT_VIDEO) < 0);
   
   HE(SDL_CreateWindowAndRenderer(656, 392, SDL_WINDOW_BORDERLESS, &window, &renderer) < 0);
@@ -91,4 +91,5 @@ void main() {
       will_draw = false;
     }
   }
+ return 0;
 }

@@ -2,11 +2,11 @@
 set -e
 
 generate_ninja () {
-  echo -n > build.ninja
+  /bin/echo -n > build.ninja
   
 cat << EOF >> build.ninja
 rule cc
-  command = $CC -c \$in -O2 -Wall -Werror -Wno-main -Wno-pointer-sign -Wno-stringop-truncation -Wno-switch $(sdl2-config --cflags) -MD -MF \$out.d -o \$out
+  command = $CC -c \$in -O2 -Wall -Werror -Wno-main -Wno-pointer-sign -Wno-switch $(sdl2-config --cflags) -MD -MF \$out.d -o \$out
   depfile = \$out.d
   description = Compiling C object \$out
 
