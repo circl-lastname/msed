@@ -45,8 +45,8 @@ entries_t* dir_read(char* dirname) {
       case DT_DIR:
         temp_entries->entries[i].type = ENTRY_TYPE_DIR;
         dirs++;
-      break;
-      case DT_LNK:
+        break;
+      case DT_LNK:;
         char* name;
         HE((name = malloc(strlen(dirname) + 1 + strlen(entry->d_name) + 1)) == NULL);
         
