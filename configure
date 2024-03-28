@@ -6,7 +6,7 @@ generate_ninja () {
   
 cat << EOF >> build.ninja
 rule cc
-  command = $CC -c \$in -O2 -Wall -Werror -Wno-main -Wno-pointer-sign -Wno-switch $(sdl2-config --cflags) -MD -MF \$out.d -o \$out
+  command = $CC -c \$in -O2 $(sdl2-config --cflags) -MD -MF \$out.d -o \$out
   depfile = \$out.d
   description = Compiling C object \$out
 
@@ -19,7 +19,7 @@ rule convert
   description = Converting to raw binary \$out
 
 rule cc_bin2h
-  command = $CC \$in -s -O2 -Wall -Werror -Wno-main -MD -MF \$out.d -o \$out
+  command = $CC \$in -s -O2 -MD -MF \$out.d -o \$out
   depfile = \$out.d
   description = Compiling executable \$out
 
