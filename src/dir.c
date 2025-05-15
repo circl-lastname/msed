@@ -42,11 +42,20 @@ entries_t* dir_read(char* dirname) {
   
   while ((entry = readdir(dir))) {
     switch (entry->d_type) {
+      case DT_BLK:
+      case DT_CHR:
+      case DT_FIFO:
+      case DT_REG:
+      case DT_SOCK:
+        temp_entries->entries[i].type = ENTRY_TYPE_FILE;
+      break;
       case DT_DIR:
         temp_entries->entries[i].type = ENTRY_TYPE_DIR;
         dirs++;
       break;
-      case DT_LNK:;
+      case DT_LNK:
+      case DT_UNKNOWN:
+      default:;
         char* name;
         HE((name = malloc(strlen(dirname) + 1 + strlen(entry->d_name) + 1)) == NULL);
         
@@ -69,9 +78,6 @@ entries_t* dir_read(char* dirname) {
             temp_entries->entries[i].type = ENTRY_TYPE_FILE;
           }
         }
-      break;
-      default:
-        temp_entries->entries[i].type = ENTRY_TYPE_FILE;
       break;
     }
     
